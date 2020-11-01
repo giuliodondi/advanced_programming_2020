@@ -20,9 +20,11 @@ int main(int argc, char ** argv ) {
 	vector<string> word_vec{};
 	vector<long unsigned int> word_count{};
 	
+	//parse the stdin line by line
 	string line {""};
 	while(std::getline(std::cin,line))
 	{
+		//compose a new word with charcters read until we reach a delimiter character
 		string word;
 		for (auto x : line) {
 			bool isdelim{false};
@@ -34,6 +36,8 @@ int main(int argc, char ** argv ) {
 				}
 			}
 			if (isdelim) {
+				//if we hit a delimiter and the word is not empty, call the function to
+				//add it to the words vec or increment the word counter
 				if (word.compare("")!=0 )
 					add_uniq(word_vec,word_count,word);
 				word = "";
@@ -45,6 +49,7 @@ int main(int argc, char ** argv ) {
 		
 	}
 
+	//print all found words and their counter
 	print_wordvec(word_vec,word_count);
 	
 	word_vec.clear();
@@ -56,6 +61,8 @@ int main(int argc, char ** argv ) {
 template <typename T, typename T2>
 void add_uniq( std::vector <T>& words, std::vector <T2>& wordcount, string new_wrd) {
 
+	//cycle the words vec 
+	//if a match is found, increment the counter and flag
 	bool isnew{true};
 	auto i=0u;
 	for (auto& w : words) {
@@ -66,7 +73,9 @@ void add_uniq( std::vector <T>& words, std::vector <T2>& wordcount, string new_w
 		}
 		++i;
 	}
-			
+	
+	//if no match is found, it's a new word
+	//add entry to both words and counter vecs
 	if (isnew) {
 		words.push_back(new_wrd);	
 		wordcount.push_back(1);	
